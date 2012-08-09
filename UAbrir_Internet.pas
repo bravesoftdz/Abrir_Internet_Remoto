@@ -26,6 +26,8 @@ type
     procedure SetRegistryData(RootKey: HKEY; Key, Value: string;
   RegDataType: TRegDataType; Data: variant);
     procedure SimpleDataSet1AfterOpen(DataSet: TDataSet);
+    procedure Edit1KeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
@@ -165,6 +167,13 @@ Conexion.Execute(sql,nil,nil);
 Resultado:= SimpleDataSet1N_ALEATORIO.AsString;
 sql:= 'INSERT INTO SEC_ALEATORIO (N_ALEATORIO) VALUES '''+Resultado+'''';
 Conexion.Execute(sql,nil,nil);
+end;
+
+procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key = VK_RETURN then
+  BtOk.Click;
 end;
 
 end.

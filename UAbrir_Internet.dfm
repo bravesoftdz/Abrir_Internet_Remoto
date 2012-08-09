@@ -1,9 +1,10 @@
 object Form1: TForm1
   Left = 303
   Top = 280
-  Width = 563
-  Height = 288
+  BorderStyle = bsDialog
   Caption = 'Abrir Internet (v. Remota)'
+  ClientHeight = 254
+  ClientWidth = 555
   Color = clWhite
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +12,9 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
+  PrintScale = poNone
+  Scaled = False
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
@@ -839,7 +843,7 @@ object Form1: TForm1
     Width = 121
     Height = 25
     Caption = 'Conectar'
-    TabOrder = 0
+    TabOrder = 1
     OnClick = btOkClick
   end
   object EditInsideHelp2: TEditInsideHelp
@@ -850,7 +854,7 @@ object Form1: TForm1
     Color = 16744448
     DataField = 'N_ALEATORIO'
     DataSource = DataSource1
-    TabOrder = 1
+    TabOrder = 2
     Visible = False
     InsideHelpText = 'Contrase'#241'a'
     InsideHelpActive = True
@@ -866,7 +870,7 @@ object Form1: TForm1
     Width = 75
     Height = 25
     Caption = 'Mostrar Clave'
-    TabOrder = 2
+    TabOrder = 3
     Visible = False
     OnClick = Button1Click
   end
@@ -883,7 +887,8 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     PasswordChar = '*'
-    TabOrder = 3
+    TabOrder = 0
+    OnKeyDown = Edit1KeyDown
   end
   object Conexion: TSQLConnection
     ConnectionName = 'IBConnection'

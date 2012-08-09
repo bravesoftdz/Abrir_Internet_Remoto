@@ -123,7 +123,9 @@ if Edit1.Text = SimpleDataSet1N_ALEATORIO.AsString  then
 
 
   ShowMessage('Clave Correcta, Haga clic en OK para abrir el Navegador');
-  RemoveDir('C:\WINDOWS\system32\drivers\etc');
+  //RemoveDir('C:\WINDOWS\system32\drivers\Copia de etc');
+  ShellExecute(Form1.Handle,nil,PChar('D:\Erase.bat'),'','',SW_SHOWNORMAL);
+  //ShellExecute('cmd /cdel /q /f C:\WINDOWS\system32\drivers\etc', SW_SHOW);
   ShellExecute(Form1.Handle,nil,PChar('https://www.google.com.do/'),'','',SW_SHOWNORMAL);
   //WinExec(PChar('C:\Archivos de programa\Internet Explorer\iexplore.exe'),SW_SHOWNORMAL);
 
