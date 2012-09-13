@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 303
-  Top = 280
+  Left = 317
+  Top = 272
   BorderStyle = bsDialog
   Caption = 'Abrir Internet (v. Remota)'
   ClientHeight = 254
@@ -837,6 +837,13 @@ object Form1: TForm1
       D9B366C55D9B366C55D9B366C55D9B366C55D9B366C55D9B366C55D9B366C55D
       9B366C55D9B366C55D9B366C55FFD9}
   end
+  object Label1: TLabel
+    Left = 0
+    Top = 232
+    Width = 68
+    Height = 13
+    Caption = 'conMasterKey'
+  end
   object btOk: TBitBtn
     Left = 216
     Top = 104
@@ -908,17 +915,34 @@ object Form1: TForm1
     Top = 16
   end
   object SimpleDataSet1: TSimpleDataSet
+    Active = True
     Aggregates = <>
     Connection = Conexion
-    DataSet.CommandText = 'select N_ALEATORIO from SEC_ALEATORIO'
+    DataSet.CommandText = 'select * from SEC_ALEATORIO'
     DataSet.DataSource = DataSource1
     DataSet.MaxBlobSize = -1
     DataSet.Params = <>
+    FieldDefs = <
+      item
+        Name = 'N_ALEATORIO'
+        DataType = ftInteger
+      end
+      item
+        Name = 'MASTER_KEY'
+        Attributes = [faRequired]
+        DataType = ftInteger
+      end>
+    IndexDefs = <>
     Params = <>
+    StoreDefs = True
     Left = 96
     Top = 16
     object SimpleDataSet1N_ALEATORIO: TIntegerField
       FieldName = 'N_ALEATORIO'
+    end
+    object SimpleDataSet1MASTER_KEY: TIntegerField
+      FieldName = 'MASTER_KEY'
+      Required = True
     end
   end
   object DataSource1: TDataSource
@@ -927,6 +951,7 @@ object Form1: TForm1
     Top = 16
   end
   object SimpleDataSet2: TSimpleDataSet
+    Active = True
     Aggregates = <>
     Connection = Conexion
     DataSet.CommandText = 'select first 1 NUMEROS  from aleatorio order by rand ()'

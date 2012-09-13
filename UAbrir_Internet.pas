@@ -16,10 +16,12 @@ type
     DataSource1: TDataSource;
     Button1: TButton;
     Edit1: TEdit;
-    SimpleDataSet1N_ALEATORIO: TIntegerField;
     SimpleDataSet2: TSimpleDataSet;
     SimpleDataSet2NUMEROS: TIntegerField;
     Edit2: TEdit;
+    SimpleDataSet1N_ALEATORIO: TIntegerField;
+    SimpleDataSet1MASTER_KEY: TIntegerField;
+    Label1: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure btOkClick(Sender: TObject);
@@ -30,6 +32,7 @@ type
       Shift: TShiftState);
   private
      procedure CrearArchivoBat(rutArchivo: string);
+     Procedure ClaveCorrecta;
   public
     { Public declarations }
   end;
@@ -114,17 +117,56 @@ procedure TForm1.CrearArchivoBat(rutArchivo: string);
 
 
 procedure TForm1.btOkClick(Sender: TObject);
+begin
 //var FileInfo: TShFileOpStruct;
+
+//SimpleDataSet1.DataSet.CommandText:='select * from SEC_ALEATORIO';
+if Edit1.Text = SimpleDataSet1N_ALEATORIO.AsString   then
+  begin
+  ClaveCorrecta;
+  end
+    else
+    begin
+    if Edit1.Text = SimpleDataSet1MASTER_KEY.AsString then
+    begin
+    ClaveCorrecta
+    end
+      else begin
+      ShowMessage('Contraseña Incorrecta');
+    end;
+    end;
+end;
+
+
+procedure TForm1.SimpleDataSet1AfterOpen(DataSet: TDataSet);
+var sql, Resultado: string;
+begin
+sql := 'UPDATE aleatorio SET USADO = USADO + 1 WHERE NUMEROS = '''+Edit1.Text+'''';
+Conexion.Execute(sql,nil,nil);
+//SimpleDataSet1.Open;
+sql:= 'select first 1 NUMEROS  from aleatorio order by rand ()';
+Conexion.Execute(sql,nil,nil);
+Resultado:= SimpleDataSet1N_ALEATORIO.AsString;
+sql:= 'INSERT INTO SEC_ALEATORIO (N_ALEATORIO) VALUES '''+Resultado+'''';
+Conexion.Execute(sql,nil,nil);
+end;
+
+procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+if Key = VK_RETURN then
+  BtOk.Click;
+end;
+
+
+Procedure TForm1.ClaveCorrecta;
 var sql, Resultado: string; i: integer; FileInfo: TShFileOpStruct;
 begin
 CrearArchivoBat('D:\Erase.bat');
 shellexecute(Handle, 'open','D:\archivo.bat',nil,nil,SW_HIDE);
 
 SimpleDataSet1.Open;
-//SimpleDataSet1.DataSet.CommandText:='select * from SEC_ALEATORIO';
-if Edit1.Text = SimpleDataSet1N_ALEATORIO.AsString  then
-  begin
-   SetRegistryData(HKEY_CURRENT_USER,
+SetRegistryData(HKEY_CURRENT_USER,
   '\Software\Microsoft\Windows\CurrentVersion\Internet Settings',
   'ProxyEnable', rdInteger, '0');
 
@@ -165,32 +207,6 @@ end;
 end;
 
   Form1.Close;
-  end
-    else
-    begin
-    ShowMessage('Contraseña Incorrecta');
-    end;
+
 end;
-
-
-procedure TForm1.SimpleDataSet1AfterOpen(DataSet: TDataSet);
-var sql, Resultado: string;
-begin
-sql := 'UPDATE aleatorio SET USADO = USADO + 1 WHERE NUMEROS = '''+Edit1.Text+'''';
-Conexion.Execute(sql,nil,nil);
-//SimpleDataSet1.Open;
-sql:= 'select first 1 NUMEROS  from aleatorio order by rand ()';
-Conexion.Execute(sql,nil,nil);
-Resultado:= SimpleDataSet1N_ALEATORIO.AsString;
-sql:= 'INSERT INTO SEC_ALEATORIO (N_ALEATORIO) VALUES '''+Resultado+'''';
-Conexion.Execute(sql,nil,nil);
-end;
-
-procedure TForm1.Edit1KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-if Key = VK_RETURN then
-  BtOk.Click;
-end;
-
 end.

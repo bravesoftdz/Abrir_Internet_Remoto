@@ -879,6 +879,7 @@ object Form1: TForm1
     Height = 21
     TabOrder = 3
     Text = 'Edit2'
+    Visible = False
   end
   object Conexion: TSQLConnection
     ConnectionName = 'IBConnection'
