@@ -896,7 +896,7 @@ object Form1: TForm1
     LoginPrompt = False
     Params.Strings = (
       'DriverName=Interbase'
-      'Database=5.108.175.106:D:\Easy System News\DATA.FDB'
+      'Database=25.108.175.106:D:\Easy System News\DATA.FDB'
       'RoleName=RoleName'
       'User_Name=SYSDBA'
       'Password=juan173mateo69'
